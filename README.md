@@ -16,14 +16,15 @@
 
   
 </div>
+
 <p align="center">
-  <a href="https://github.com/AmirHossein-Kargar/freelancer-platform" target="_blank">
+  <a href="https://github.com/AmirHossein-Kargar/freelancer-platform" target="_blank" style="text-decoration:none;">
     <img src="https://img.shields.io/badge/View_Demo-000000?style=for-the-badge&logo=appveyor&logoColor=00BFFF" alt="View Demo"/>
   </a>
-  <a href="https://github.com/AmirHossein-Kargar/freelancer-platform/issues/new?labels=bug" target="_blank">
+  <a href="https://github.com/AmirHossein-Kargar/freelancer-platform/issues/new?labels=bug" target="_blank" style="text-decoration:none;">
     <img src="https://img.shields.io/badge/Report_Bug-000000?style=for-the-badge&logo=bugzilla&logoColor=FF4500" alt="Report Bug"/>
   </a>
-  <a href="https://github.com/AmirHossein-Kargar/freelancer-platform/issues/new?labels=enhancement" target="_blank">
+  <a href="https://github.com/AmirHossein-Kargar/freelancer-platform/issues/new?labels=enhancement" target="_blank" style="text-decoration:none;">
     <img src="https://img.shields.io/badge/Request_Feature-000000?style=for-the-badge&logo=codio&logoColor=32CD32" alt="Request Feature"/>
   </a>
 </p>
