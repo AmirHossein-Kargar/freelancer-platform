@@ -9,7 +9,7 @@
 // ? React-Query => redux (remote state)
 
 import { Route, Routes } from "react-router-dom"
-import Auth from "./components/Auth/Auth"
+import Auth from "./pages/Auth"
 
 function App() {
 
