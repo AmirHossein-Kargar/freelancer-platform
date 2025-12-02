@@ -1,8 +1,12 @@
 @import "tailwindcss";
 @import "./fonts.css";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
-  --background-app: #ffffff;
+  --color-background-app: #ffffff;
+  --color-background-app-dark: #111827;
+
   --color-primary-900: #4a6dff;
   --color-primary-800: #5c7cff;
   --color-primary-700: #6e8aff;
@@ -13,6 +17,7 @@
   --color-primary-200: #c9d3ff;
   --color-primary-100: #dbe2ff;
   --color-primary-50: #e4e9ff;
+
   --color-secondary-900: #111827;
   --color-secondary-800: #1f2937;
   --color-secondary-700: #374151;
@@ -24,51 +29,78 @@
   --color-secondary-100: #f3f4f6;
   --color-secondary-50: #f9fafb;
   --color-secondary-0: #ffffff;
+
   --color-success: #00c073;
   --color-warning: #ff9900;
   --color-error: #ff4757;
   --color-red-500: #ef4444;
   --color-red-300: #fca5a5;
-}
 
-.dark-mode {
-  --color-secondary-900: #f9fafb;
-  --color-secondary-800: #f3f4f6;
-  --color-secondary-700: #e5e7eb;
-  --color-secondary-600: #d1d5db;
-  --color-secondary-500: #9ca3af;
-  --color-secondary-400: #6b7280;
-  --color-secondary-300: #4b5563;
-  --color-secondary-200: #374151;
-  --color-secondary-100: #1f2937;
-  --color-secondary-50: #111827;
-  --color-secondary-0: #18212f;
-  --backdrop-color: #000000;
+  --color-backdrop-dark: #000000;
 }
 
 body {
   font-family: Vazirmatn, sans-serif;
   direction: rtl;
-  background-color: var(--background-app);
+  font-weight: 400;
 }
 
 @layer components {
+  /* Text Field */
   .textField__input {
-    @apply w-full py-3 px-4 rounded-xl text-secondary-900 border border-gray-200 outline-none hover:border-primary-300 focus:border-primary-500 focus:bg-white transition-all duration-200 ease-in-out focus:shadow-lg focus:shadow-primary-200;
+    @apply w-full rounded-xl px-4 py-3
+    border border-secondary-200 dark:border-secondary-700
+    bg-secondary-0 dark:bg-secondary-900
+    text-secondary-900 dark:text-secondary-50
+    outline-none
+    transition-all duration-200 ease-in-out
+    hover:border-primary-300 dark:hover:border-primary-500
+    focus:border-primary-500 
+    focus:bg-secondary-0 dark:focus:bg-secondary-900
+    focus:shadow-lg focus:shadow-primary-200 dark:focus:shadow-primary-900;
   }
+
+  /* Buttons */
   .btn {
-    @apply px-3 py-1 font-bold rounded-xl transition-all duration-200 cursor-pointer;
+    @apply cursor-pointer rounded-xl px-3 py-1
+    font-bold
+    transition-all duration-200;
   }
+
   .btn--primary {
-    @apply px-4 py-2 bg-primary-900 text-secondary-100 shadow-lg shadow-primary-300 hover:bg-primary-800;
+    @apply px-4 py-3
+    bg-primary-900 text-white
+    shadow-lg shadow-primary-300 dark:shadow-primary-900/50
+    hover:bg-primary-800 dark:hover:bg-primary-700;
   }
+
   .btn--secondary {
-    @apply bg-secondary-500 text-secondary-100
+    @apply bg-secondary-500 text-secondary-100;
   }
+
+  /* OTP Input */
+  .otp-input {
+    @apply h-12 w-10 rounded-xl
+    border border-secondary-200 dark:border-secondary-700
+    bg-secondary-50 dark:bg-secondary-900
+    text-center font-bold text-secondary-900 dark:text-secondary-50
+    outline-none
+    transition-all duration-200
+    focus:border-primary-500
+    focus:bg-secondary-0 dark:focus:bg-secondary-900
+    focus:shadow-lg focus:shadow-primary-200 dark:focus:shadow-primary-900;
+  }
+
+  /* Badges */
   .badge {
+    /* Base badge styles */
   }
+
   .badge--primary {
+    /* Primary badge styles */
   }
+
   .badge--secondary {
+    /* Secondary badge styles */
   }
 }
