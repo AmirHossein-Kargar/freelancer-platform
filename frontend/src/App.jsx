@@ -20,21 +20,11 @@ function App() {
     <>
       <Toaster
         toastOptions={{
-          success: {
-            style: {
-              background: 'rgb(17 24 39)',
-              color: 'rgb(249 250 251)',
-            },
-          },
-          error: {
-            style: {
-              background: 'rgb(17 24 39)',
-              color: 'rgb(249 250 251)',
-            },
-          },
+          className: '',
           style: {
-            background: 'rgb(17 24 39)',
-            color: 'rgb(249 250 251)',
+            background: 'rgb(var(--color-secondary-0) / 1)',
+            color: 'rgb(var(--color-secondary-900) / 1)',
+            border: '1px solid rgb(var(--color-secondary-200) / 1)',
           },
         }}
       />
