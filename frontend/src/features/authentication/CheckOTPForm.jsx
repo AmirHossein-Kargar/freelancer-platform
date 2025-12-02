@@ -33,6 +33,9 @@ export default function CheckOTPForm() {
                 />
                 <button className="btn btn--primary w-full">تایید</button>
             </form>
+            <button className="text-secondary-600 dark:text-secondary-400 mt-4 w-full text-sm hover:text-secondary-800 dark:hover:text-secondary-200 transition-colors cursor-pointer">
+                ارسال مجدد کد تایید
+            </button>
         </div>
     )
 }
