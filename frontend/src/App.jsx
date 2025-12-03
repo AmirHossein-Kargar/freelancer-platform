@@ -12,6 +12,7 @@ import { Route, Routes } from "react-router-dom"
 import { Toaster } from 'react-hot-toast';
 import Auth from "./pages/Auth"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import CompleteProfile from "./pages/CompleteProfile";
 
 const queryClient = new QueryClient()
 
@@ -20,7 +21,7 @@ function App() {
     <>
       <Toaster
         toastOptions={{
-          className: '',
+          className: 'dark:!bg-secondary-800 dark:!text-secondary-100 dark:!border-secondary-700',
           style: {
             background: 'rgb(var(--color-secondary-0) / 1)',
             color: 'rgb(var(--color-secondary-900) / 1)',
@@ -30,6 +31,7 @@ function App() {
       />
       <Routes>
         <Route path="/auth" element={<Auth />} />
+        <Route path="/complete-profile" element={<CompleteProfile />} />
       </Routes>
     </>
   </QueryClientProvider>

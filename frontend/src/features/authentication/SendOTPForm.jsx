@@ -1,30 +1,17 @@
 import { useForm } from "react-hook-form";
 import TextField from '../../ui/TextField'
-import { useMutation } from '@tanstack/react-query'
-import { getOtp } from '../../services/authService'
-import toast from 'react-hot-toast'
-import { handleApiError } from '../../utils/errorHandler'
+import Loading from "../../ui/Loading";
 
-export default function SendOTPForm() {
+export default function SendOTPForm({ onSendOtp, isPending }) {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const { mutateAsync } = useMutation({
-        mutationFn: getOtp
-    });
-
     const sendOtpHandler = async ({ phoneNumber }) => {
-        try {
-            const data = await mutateAsync({ phoneNumber });
-            console.log(data);
-            toast.success(data.message);
-        } catch (error) {
-            handleApiError(error);
-        }
+        await onSendOtp(phoneNumber);
     };
 
     return (
-        <div>
+        <div style={{ userSelect: 'none' }}>
             <form className='space-y-8' onSubmit={handleSubmit(sendOtpHandler)}>
                 <div className='text-center space-y-4'>
                     <h1 className='text-2xl font-bold text-secondary-900 dark:text-white'>ورود یا ثبت نام</h1>
@@ -55,9 +42,10 @@ export default function SendOTPForm() {
                     }}
                 />
 
-                <button type='submit' className='btn btn--primary w-full'>
+                {isPending ? <Loading /> : <button type='submit' className='btn btn--primary w-full'>
                     ارسال کد تایید
-                </button>
+                </button>}
+
             </form>
         </div>
     );

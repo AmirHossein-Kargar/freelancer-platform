@@ -1,7 +1,9 @@
-export default function TextField({ label, name, register, errors, type = "tel", validation }) {
+export default function TextField({ label, name, register, errors, type = "tel", validation, placeholder = "مثال: 09123456789" }) {
 
     const handleInput = (e) => {
-        e.target.value = e.target.value.replace(/[^0-9۰-۹]/g, '');
+        if (type === "tel") {
+            e.target.value = e.target.value.replace(/[^0-9۰-۹]/g, '');
+        }
     };
 
     return (
@@ -15,7 +17,7 @@ export default function TextField({ label, name, register, errors, type = "tel",
                 type={type}
                 className='textField__input'
                 autoComplete='off'
-                placeholder='مثال: 09123456789'
+                placeholder={placeholder}
                 onInput={handleInput}
                 {...register(name, validation)}
             />
