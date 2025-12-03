@@ -3,6 +3,12 @@ import { useForm } from "react-hook-form";
 import TextField from "../../ui/TextField";
 import RadioInput from "../../ui/RadioInput";
 import { usePreventBackNavigation } from "../../hooks/usePreventBackNavigation";
+import { useMutation } from "@tanstack/react-query";
+import { completeProfile } from "../../services/authService";
+import toast from "react-hot-toast";
+import { handleApiError } from "../../utils/errorHandler";
+import { useNavigate } from "react-router-dom";
+import Loading from "../../ui/Loading";
 
 
 export default function CompleteProfileForm() {
@@ -11,13 +17,30 @@ export default function CompleteProfileForm() {
         mode: "onChange"
     });
 
+    const navigate = useNavigate();
 
     usePreventBackNavigation(true);
 
+    const { mutateAsync, isPending } = useMutation({
+        mutationFn: completeProfile
+    })
+
+
     const submitHandler = async (data) => {
-        const fullName = `${data.name} ${data.lastName}`;
-        console.log({ ...data, name: fullName, role });
-        // TODO: API call to complete profile
+        try {
+            const fullName = `${data.name} ${data.lastName}`;
+            const { user, message } = await mutateAsync({
+                name: fullName,
+                email: data.email,
+                role
+            });
+            console.log(user, data)
+            toast.success(message);
+            if (user.role === "OWNER") navigate("/dashboard/owner");
+            if (user.role === "FREELANCER") navigate("/dashboard/freelancer");
+        } catch (error) {
+            handleApiError(error);
+        }
     };
 
 
@@ -117,9 +140,9 @@ export default function CompleteProfileForm() {
                     </div>
                 </div>
 
-                <button type="submit" className="btn btn--primary w-full mt-4">
+                {isPending ? <Loading /> : <button type="submit" className="btn btn--primary w-full mt-4">
                     تکمیل و ادامه
-                </button>
+                </button>}
             </form>
         </div>
     )
