@@ -6,6 +6,7 @@ import { handleApiError } from "../../utils/errorHandler"
 import { checktOtp } from "../../services/authService"
 import { useNavigate } from "react-router-dom"
 import { FaArrowRightFromBracket } from "react-icons/fa6";
+import Loading from "../../ui/Loading"
 
 const RESEND_TIME = 90
 
@@ -16,7 +17,7 @@ export default function CheckOTPForm({ phoneNumber, setStep, onResendOtp }) {
 
     const navigate = useNavigate()
 
-    const { mutateAsync } = useMutation({
+    const { isPending, mutateAsync } = useMutation({
         mutationFn: checktOtp
     })
 
@@ -94,8 +95,7 @@ export default function CheckOTPForm({ phoneNumber, setStep, onResendOtp }) {
                         دریافت مجدد کد تایید
                     </button>
                 )}
-
-                <button className="btn btn--primary w-full">تایید</button>
+                {isPending ? <Loading /> : <button className="btn btn--primary w-full">تایید</button>}
             </form>
 
         </div>

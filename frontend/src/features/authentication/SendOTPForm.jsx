@@ -28,7 +28,7 @@ export default function SendOTPForm({ onSendOtp, isPending }) {
                     validation={{
                         required: "شماره موبایل الزامی است",
                         pattern: {
-                            value: /^09[0-9۰-۹]{9}$/,
+                            value: /^09[0-9]{9}$/,
                             message: "شماره موبایل باید ۱۱ رقم و با ۰۹ شروع شود",
                         },
                         minLength: {
@@ -38,6 +38,12 @@ export default function SendOTPForm({ onSendOtp, isPending }) {
                         maxLength: {
                             value: 11,
                             message: "شماره موبایل باید ۱۱ رقم باشد"
+                        },
+                        validate: (value) => {
+                            if (/[۰-۹]/.test(value)) {
+                                return "شماره موبایل باید با اعداد انگلیسی نوشته شود";
+                            }
+                            return true;
                         }
                     }}
                 />

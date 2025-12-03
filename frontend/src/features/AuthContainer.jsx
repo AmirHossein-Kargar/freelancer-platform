@@ -7,7 +7,7 @@ import toast from 'react-hot-toast'
 import { handleApiError } from '../utils/errorHandler'
 import { usePreventBackNavigation } from '../hooks/usePreventBackNavigation'
 
-export default function AuthContainer() {
+export default function AuthContainer({ onStepChange }) {
     const [step, setStep] = useState(1)
     const [phoneNumber, setPhoneNumber] = useState("")
     const [isLoading, setIsLoading] = useState(false)
@@ -18,13 +18,18 @@ export default function AuthContainer() {
         mutationFn: getOtp
     });
 
+    const handleStepChange = (newStep) => {
+        setStep(newStep);
+        onStepChange?.(newStep);
+    };
+
     const sendOtpHandler = async (phone) => {
         try {
             setIsLoading(true);
             const data = await mutateAsync({ phoneNumber: phone });
             toast.success(data.message);
             setPhoneNumber(phone);
-            setStep(2);
+            handleStepChange(2);
         } catch (error) {
             handleApiError(error);
         } finally {
@@ -37,7 +42,7 @@ export default function AuthContainer() {
             case 1:
                 return <SendOTPForm onSendOtp={sendOtpHandler} isPending={isLoading} />
             case 2:
-                return <CheckOTPForm phoneNumber={phoneNumber} setStep={setStep} onResendOtp={() => sendOtpHandler(phoneNumber)} />
+                return <CheckOTPForm phoneNumber={phoneNumber} setStep={handleStepChange} onResendOtp={() => sendOtpHandler(phoneNumber)} />
             default: return null
         }
     }

@@ -1,4 +1,21 @@
-export default function AuthHero() {
+const heroContent = {
+    login: {
+        title: "پلتفرم هوشمند فریلنسینگ",
+        description: "اتصال سریع و مطمئن متخصصان به پروژه‌ های واقعی.\nبا ابزار های پیشرفته مدیریت پروژه، همکاری حرفه‌ ای را تجربه کنید."
+    },
+    verify: {
+        title: "یک قدم تا شروع",
+        description: "کد تایید را وارد کنید و به دنیای فرصت‌های بی ‌پایان بپیوندید.\nامنیت شما برای ما در اولویت است."
+    },
+    complete: {
+        title: "پروفایل حرفه‌ ای بسازید",
+        description: "با تکمیل اطلاعات، اولین قدم را برای دریافت پروژه ‌های ایده ‌آل را بردارید.\nهر جزئیات، شانس موفقیت شما را بیشتر میکند."
+    }
+};
+
+export default function AuthHero({ step = "login" }) {
+    const content = heroContent[step] || heroContent.login;
+
     return (
         <div className="hidden lg:flex relative flex-col items-center justify-center bg-white dark:bg-secondary-900 p-12 text-center overflow-hidden h-full">
             {/* Background overlay */}
@@ -37,12 +54,10 @@ export default function AuthHero() {
                 {/* Text content */}
                 <div className="space-y-6">
                     <h2 className="text-4xl font-extrabold leading-tight text-secondary-900 dark:text-secondary-100">
-                        پلتفرم هوشمند فریلنسینگ
+                        {content.title}
                     </h2>
-                    <p className="text-lg leading-relaxed text-gray-600 dark:text-gray-300">
-                        اتصال سریع و مطمئن متخصصان به پروژه‌ های واقعی.
-                        <br />
-                        با ابزارهای پیشرفته مدیریت پروژه، همکاری حرفه‌ای را تجربه کنید.
+                    <p className="text-lg leading-relaxed text-gray-600 dark:text-gray-300 whitespace-pre-line">
+                        {content.description}
                     </p>
                 </div>
             </div>
