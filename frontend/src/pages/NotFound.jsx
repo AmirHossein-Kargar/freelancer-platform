@@ -1,7 +1,7 @@
-import { useNavigate } from "react-router-dom";
+import useMoveBack from "../hooks/useMoveBack";
 
 function NotFound() {
-    const navigate = useNavigate();
+    const moveBack = useMoveBack();
 
     return (
         <div className="relative flex min-h-screen w-full flex-col bg-secondary-0 dark:bg-secondary-900">
@@ -39,7 +39,7 @@ function NotFound() {
 
                         {/* Button */}
                         <button
-                            onClick={() => navigate(-1)}
+                            onClick={moveBack}
                             className="mt-10 cursor-pointer select-none rounded-xl bg-primary-900 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-primary-300 transition-all hover:bg-primary-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-900 dark:shadow-primary-900/50 dark:hover:bg-primary-700"
                         >
                             بازگشت به صفحه قبل
