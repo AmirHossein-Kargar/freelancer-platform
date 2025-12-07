@@ -16,6 +16,7 @@ import CompleteProfile from "./pages/CompleteProfile";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import Subscription from "./pages/Subscription";
+import Dashboard from "./features/dashboard/freelancer/Dashboard";
 
 const queryClient = new QueryClient()
 
@@ -38,6 +39,7 @@ function App() {
         <Route path="/auth" element={<Auth />} />
         <Route path="/complete-profile" element={<CompleteProfile />} />
         <Route path="/Subscription" element={<Subscription />} />
+        <Route path="/dashboard/freelancer" element={<Dashboard />} />
         
       </Routes>
     </>

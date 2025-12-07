@@ -27,11 +27,26 @@ export default function CheckOTPForm({ phoneNumber, setStep, onResendOtp }) {
         try {
             const { user, message } = await mutateAsync({ phoneNumber, otp })
             toast.success(message)
-            if (user.isActive) {
-                if (user.role === "OWNER") navigate("/owner")
-                if (user.role === "FREELANCER") navigate("/freelancer")
-            } else {
+
+            // اگر پروفایل کامل نشده، به صفحه تکمیل پروفایل هدایت شود
+            if (!user.isActive) {
                 navigate("/complete-profile")
+                return
+            }
+
+            // هدایت به داشبورد بر اساس نقش کاربر
+            if (user.role === "OWNER") {
+                navigate("/dashboard/owner")
+            } else if (user.role === "FREELANCER") {
+                navigate("/dashboard/freelancer")
+            }
+
+            // اگر هنوز تایید نشده، پیام اطلاع‌رسانی نمایش داده شود
+            if (user.status !== 2) {
+                toast("حساب شما در انتظار تایید ادمین است. پس از تایید، دسترسی کامل خواهید داشت.", {
+                    icon: "⏳",
+                    duration: 5000
+                })
             }
 
         } catch (error) {
