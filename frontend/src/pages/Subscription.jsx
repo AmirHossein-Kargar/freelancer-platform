@@ -155,7 +155,7 @@ export default function Subscription() {
     };
 
     return (
-        <div className="flex h-auto min-h-screen w-full flex-col overflow-x-hidden bg-background-app dark:bg-background-app-dark">
+        <div className="flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
             <div className="flex h-full grow flex-col">
                 <div className="flex flex-1 justify-center py-10 sm:py-16 px-4 sm:px-6 lg:px-8">
                     <main className="flex w-full max-w-5xl flex-col items-center gap-10">

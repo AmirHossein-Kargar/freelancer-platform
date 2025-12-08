@@ -17,7 +17,7 @@ export default function AuthHero({ step = "login" }) {
     const content = heroContent[step] || heroContent.login;
 
     return (
-        <div className="hidden lg:flex relative flex-col items-center justify-center bg-white dark:bg-secondary-900 p-12 text-center overflow-hidden h-full">
+        <div className="hidden lg:flex relative flex-col items-center justify-center bg-secondary-50 dark:bg-secondary-900 p-12 text-center overflow-hidden h-full">
             {/* Background overlay */}
             <div className="absolute inset-0 z-0 bg-primary-50/50 dark:bg-primary-900/10 mask-[radial-gradient(ellipse_100%_70%_at_50%_0%,#000_70%,transparent_110%)]" />
 

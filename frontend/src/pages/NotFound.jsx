@@ -4,7 +4,7 @@ function NotFound() {
     const moveBack = useMoveBack();
 
     return (
-        <div className="relative flex min-h-screen w-full flex-col bg-secondary-0 dark:bg-secondary-900">
+        <div className="relative flex min-h-screen w-full flex-col">
             <div className="flex h-full grow flex-col">
                 <main className="flex flex-1 items-center justify-center px-10 py-8">
                     <div className="flex max-w-7xl flex-col items-center text-center">

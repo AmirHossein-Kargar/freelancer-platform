@@ -16,7 +16,7 @@ export default function Dashboard() {
     const isNotVerified = user?.status !== 2;
 
     return (
-        <div className="min-h-screen w-full bg-secondary-0 dark:bg-secondary-900 px-10 py-8 select-none">
+        <div className="min-h-screen w-full px-10 py-8 select-none">
             <main className="mx-auto max-w-7xl">
                 {/* Warning Banner */}
                 {isNotVerified && (

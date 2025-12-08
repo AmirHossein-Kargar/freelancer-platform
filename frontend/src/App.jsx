@@ -17,6 +17,8 @@ import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import Subscription from "./pages/Subscription";
 import Dashboard from "./features/dashboard/freelancer/Dashboard";
+import AppLayout from "./ui/AppLayout";
+import ApiDocs from "./features/api/ApiDocs";
 
 const queryClient = new QueryClient()
 
@@ -34,13 +36,18 @@ function App() {
         }}
       />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="*" element={<NotFound />} />
+        {/* Routes with Header */}
+        <Route element={<AppLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/dashboard/freelancer" element={<Dashboard />} />
+          <Route path="/Subscription" element={<Subscription />} />
+          <Route path="/api-docs" element={<ApiDocs />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+
+        {/* Routes without Header */}
         <Route path="/auth" element={<Auth />} />
         <Route path="/complete-profile" element={<CompleteProfile />} />
-        <Route path="/Subscription" element={<Subscription />} />
-        <Route path="/dashboard/freelancer" element={<Dashboard />} />
-        
       </Routes>
     </>
   </QueryClientProvider>
