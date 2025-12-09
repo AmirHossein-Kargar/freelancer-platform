@@ -10,7 +10,7 @@ export default function Auth() {
     };
 
     return (
-        <div className="flex flex-col lg:flex-row min-h-screen bg-secondary-50 dark:bg-secondary-800">
+        <div className="flex flex-col lg:flex-row min-h-screen bg-secondary-50 dark:bg-secondary-900">
             {/* Form Section - centered on mobile/tablet, left on desktop */}
             <div className="flex justify-center items-center flex-1 px-4 py-8 lg:px-12 lg:py-0">
                 <AuthContainer onStepChange={handleStepChange} />

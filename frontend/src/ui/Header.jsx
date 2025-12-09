@@ -1,7 +1,10 @@
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
+import UserAvatar from "./UserAvatar";
 
 export default function Header() {
     const navigate = useNavigate();
+    const { user, isAuthenticated, isLoading } = useAuth();
 
     return (
         <div className="sticky top-0 z-50 w-full py-4">
@@ -32,12 +35,18 @@ export default function Header() {
                         </nav>
                     </div>
 
-                    <button
-                        onClick={() => navigate("/auth")}
-                        className="min-w-[84px] h-10 rounded-xl px-4 bg-primary-900 dark:bg-primary-800 text-sm font-semibold text-white hover:bg-primary-800 dark:hover:bg-primary-700 transition-all duration-200 shadow-lg shadow-primary-300 dark:shadow-primary-900/50 cursor-pointer"
-                    >
-                        ورود / ثبت نام
-                    </button>
+                    {isLoading ? (
+                        <div className="w-10 h-10 rounded-full bg-secondary-200 dark:bg-secondary-700 animate-pulse"></div>
+                    ) : isAuthenticated ? (
+                        <UserAvatar user={user} />
+                    ) : (
+                        <button
+                            onClick={() => navigate("/auth")}
+                            className="min-w-[84px] h-10 rounded-xl px-4 bg-primary-900 dark:bg-primary-800 text-sm font-semibold text-white hover:bg-primary-800 dark:hover:bg-primary-700 transition-all duration-200 shadow-lg shadow-primary-300 dark:shadow-primary-900/50 cursor-pointer"
+                        >
+                            ورود / ثبت نام
+                        </button>
+                    )}
                 </header>
             </div>
         </div>
