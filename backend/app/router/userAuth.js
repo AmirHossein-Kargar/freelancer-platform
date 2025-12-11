@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const expressAsyncHandler = require("express-async-handler");
-// const { uploadFile } = require("../../utils/multer");
 const { verifyAccessToken } = require("../http/middlewares/user.middleware");
 const {
   UserAuthController,
@@ -9,20 +8,29 @@ const {
   getOtpLimiter,
   checkOtpLimiter,
 } = require("../http/middlewares/rateLimiter");
+const {
+  authConcurrentLimiter,
+} = require("../http/middlewares/concurrent.limiter");
+const { validateCommonInputs } = require("../http/middlewares/input.validator");
 
 router.post(
   "/get-otp",
+  authConcurrentLimiter,
   getOtpLimiter,
+  validateCommonInputs,
   expressAsyncHandler(UserAuthController.getOtp)
 );
 router.post(
   "/check-otp",
+  authConcurrentLimiter,
   checkOtpLimiter,
+  validateCommonInputs,
   expressAsyncHandler(UserAuthController.checkOtp)
 );
 router.post(
   "/complete-profile",
   verifyAccessToken,
+  validateCommonInputs,
   expressAsyncHandler(UserAuthController.completeProfile)
 );
 router.get(
@@ -32,6 +40,7 @@ router.get(
 router.patch(
   "/update",
   verifyAccessToken,
+  validateCommonInputs,
   expressAsyncHandler(UserAuthController.updateProfile)
 );
 

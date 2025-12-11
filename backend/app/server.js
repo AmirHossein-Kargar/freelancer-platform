@@ -1,12 +1,21 @@
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-// const allRoutes = require("./router/router");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const createError = require("http-errors");
 const path = require("path");
 const { allRoutes } = require("./router/router");
+const {
+  securityMiddleware,
+} = require("./http/middlewares/security.middleware");
+const {
+  logSuspiciousActivity,
+  logInjectionAttempts,
+} = require("./http/middlewares/security.logger");
+const {
+  generalConcurrentLimiter,
+} = require("./http/middlewares/concurrent.limiter");
 dotenv.config();
 class Application {
   #app = express();
@@ -36,11 +45,34 @@ class Application {
       .catch((err) => console.log("Failed to connect to MongoDB", err));
   }
   configServer() {
+    // Apply security middleware first
+    securityMiddleware(this.#app);
+
+    // Trust proxy for accurate IP addresses
+    this.#app.set("trust proxy", 1);
+
+    // CORS configuration
     this.#app.use(
-      cors({ credentials: true, origin: process.env.ALLOW_CORS_ORIGIN })
+      cors({
+        credentials: true,
+        origin: process.env.ALLOW_CORS_ORIGIN,
+        methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+        allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+      })
     );
-    this.#app.use(express.json());
-    this.#app.use(express.urlencoded({ extended: true }));
+
+    // Body parsing with size limits
+    this.#app.use(express.json({ limit: "10mb" }));
+    this.#app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+
+    // Security logging
+    this.#app.use(logSuspiciousActivity);
+    this.#app.use(logInjectionAttempts);
+
+    // Concurrent request limiting
+    this.#app.use(generalConcurrentLimiter);
+
+    // Static files
     this.#app.use(express.static(path.join(__dirname, "..")));
   }
   initClientSession() {

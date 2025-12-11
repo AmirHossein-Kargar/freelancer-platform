@@ -1,4 +1,5 @@
 const rateLimit = require("express-rate-limit");
+const { securityLogger } = require("./security.logger");
 
 // Rate limiter for getting OTP (sending SMS)
 const getOtpLimiter = rateLimit({
@@ -11,6 +12,15 @@ const getOtpLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   handler: (req, res) => {
+    securityLogger.log(
+      "OTP_RATE_LIMIT_EXCEEDED",
+      {
+        phoneNumber: req.body.phoneNumber,
+        attempts: "exceeded_limit",
+      },
+      req
+    );
+
     res.status(429).json({
       statusCode: 429,
       message:
@@ -31,6 +41,15 @@ const checkOtpLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   handler: (req, res) => {
+    securityLogger.log(
+      "OTP_VERIFICATION_RATE_LIMIT_EXCEEDED",
+      {
+        phoneNumber: req.body.phoneNumber,
+        attempts: "exceeded_limit",
+      },
+      req
+    );
+
     res.status(429).json({
       statusCode: 429,
       message:
