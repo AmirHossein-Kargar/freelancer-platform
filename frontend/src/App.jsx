@@ -8,7 +8,7 @@
 // ? useFetch(data, loading, error)
 // ? React-Query => redux (remote state)
 
-import { Route, Routes } from "react-router-dom"
+import { Navigate, Route, Routes } from "react-router-dom"
 import { Toaster } from 'react-hot-toast';
 import Auth from "./pages/Auth"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
@@ -16,9 +16,12 @@ import CompleteProfile from "./pages/CompleteProfile";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import Subscription from "./pages/Subscription";
-import Dashboard from "./features/dashboard/freelancer/Dashboard";
 import AppLayout from "./ui/AppLayout";
 import ApiDocs from "./features/api/ApiDocs";
+import DashBoard from "./features/dashboard/owner/DashBoard";
+import Dashboard from "./features/dashboard/freelancer/Dashboard";
+import Projects from "./features/dashboard/owner/Projects";
+import Project from "./pages/Project";
 
 const queryClient = new QueryClient()
 
@@ -36,18 +39,24 @@ function App() {
         }}
       />
       <Routes>
-        {/* Routes with Header */}
-        <Route element={<AppLayout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/dashboard/freelancer" element={<Dashboard />} />
-          <Route path="/Subscription" element={<Subscription />} />
-          <Route path="/api-docs" element={<ApiDocs />} />
-          <Route path="*" element={<NotFound />} />
+
+        <Route path="/owner" element={<AppLayout />}>
+
+          <Route index element={<Navigate to="dashboard" replace/>} />
+          <Route path="dashboard" element={<DashBoard />} />
+          <Route path="projects" element={<Projects />} />
+          <Route path="projects/:id" element={<Project />} />
+
         </Route>
 
         {/* Routes without Header */}
         <Route path="/auth" element={<Auth />} />
         <Route path="/complete-profile" element={<CompleteProfile />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/Subscription" element={<Subscription />} />
+        <Route path="/api-docs" element={<ApiDocs />} />
+        <Route path="*" element={<NotFound />} />
+
       </Routes>
     </>
   </QueryClientProvider>

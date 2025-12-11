@@ -1,0 +1,1 @@
+{"timestamp":"2025-12-11T12:22:15.226Z","event":"UNAUTHORIZED_ACCESS_ATTEMPT","ip":"::1","userAgent":"Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Mobile Safari/537.36","url":"/api/user/profile","method":"GET","details":{"statusCode":401,"path":"/api/user/profile","body":{}}}
