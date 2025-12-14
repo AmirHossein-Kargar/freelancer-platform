@@ -36,8 +36,8 @@ export default function CompleteProfileForm() {
             });
             console.log(user, data)
             toast.success(message);
-            if (user.role === "OWNER") navigate("/dashboard/owner");
-            if (user.role === "FREELANCER") navigate("/dashboard/freelancer");
+            if (user.role === "OWNER") navigate("/owner/dashboard");
+            if (user.role === "FREELANCER") navigate("/freelancer/dashboard");
         } catch (error) {
             handleApiError(error);
         }
