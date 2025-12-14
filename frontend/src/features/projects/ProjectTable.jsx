@@ -1,5 +1,6 @@
 import useOwnerProjects from "./useOwnerProjects"
 import Loading from "../../ui/Loading"
+import Table from "../../ui/Table"
 import { HiEye, HiPencil, HiTrash } from "react-icons/hi2"
 import truncateText from "../../utils/truncateText"
 import toLocalDateShort from "../../utils/toLocalDateShort"
@@ -50,105 +51,103 @@ export default function ProjectTable() {
     return (
         <div>
             <h2 className="text-lg font-semibold mb-4 text-secondary-900 dark:text-secondary-100">پروژه‌های من</h2>
-            <div className="overflow-x-auto">
-                <table className="min-w-full bg-white dark:bg-secondary-800 border border-secondary-200 dark:border-secondary-700 rounded-lg shadow-sm">
-                    <thead className="bg-secondary-50 dark:bg-secondary-700">
-                        <tr>
-                            {/* Render table headers dynamically */}
-                            {headers.map((header) => (
-                                <th
-                                    key={header}
-                                    className="px-4 py-3 text-right text-xs font-medium text-secondary-500 dark:text-secondary-400 uppercase tracking-wider border-b border-secondary-200 dark:border-secondary-600"
-                                >
-                                    {header}
-                                </th>
-                            ))}
-                        </tr>
-                    </thead>
-                    <tbody className="bg-white dark:bg-secondary-800 divide-y divide-secondary-200 dark:divide-secondary-700">
-                        {/* Render project rows */}
-                        {projects.map((project, index) => (
-                            <tr key={project._id} className={`cursor-pointer transition-colors duration-200 ${index % 2 === 0 ? "bg-secondary-50 dark:bg-secondary-800 hover:bg-primary-50 dark:hover:bg-primary-900/20" : "bg-white dark:bg-secondary-700 hover:bg-primary-50 dark:hover:bg-primary-900/20"}`}>
-                                {/* Row index */}
-                                <td className="px-4 py-4 whitespace-nowrap">
-                                    <div className="text-sm font-medium text-secondary-600 dark:text-secondary-400">{index + 1}</div>
-                                </td>
-                                {/* Project title */}
-                                <td className="px-4 py-4 whitespace-nowrap">
-                                    <div className="text-sm font-medium text-secondary-900 dark:text-secondary-100">{truncateText(project.title, 30)}</div>
-                                </td>
-                                {/* Project category */}
-                                <td className="px-4 py-4 whitespace-nowrap">
-                                    <div className="text-sm text-secondary-600 dark:text-secondary-300">
-                                        {project.category?.title || 'نامشخص'}
-                                    </div>
-                                </td>
-                                {/* Project budget */}
-                                <td className="px-4 py-4 whitespace-nowrap">
-                                    <div className="text-sm text-secondary-900 dark:text-secondary-100">
-                                        {toPersianNumbersWithComma(project.budget)} ریال
-                                    </div>
-                                </td>
-                                {/* Project deadline */}
-                                <td className="px-4 py-4 whitespace-nowrap">
-                                    <div className="text-sm text-secondary-900 dark:text-secondary-100">
-                                        {toLocalDateShort(project.deadline)}
-                                    </div>
-                                </td>
-                                {/* Project tags */}
-                                <td className="px-4 py-4 whitespace-nowrap">
-                                    <div className="flex flex-wrap gap-1 select-none">
-                                        {project.tags && project.tags.length > 0 ? (
-                                            project.tags.map((tag, tagIndex) => (
-                                                <span key={tagIndex} className="badge badge--secondary">
-                                                    {tag}
-                                                </span>
-                                            ))
-                                        ) : (
-                                            <span className="text-xs text-secondary-400 dark:text-secondary-500">بدون تگ</span>
-                                        )}
-                                    </div>
-                                </td>
-                                {/* Assigned freelancer */}
-                                <td className="px-4 py-4 whitespace-nowrap">
-                                    <div className="text-sm text-secondary-600 dark:text-secondary-300">
-                                        {project.freelancer ? project.freelancer.name : 'انتخاب نشده'}
-                                    </div>
-                                </td>
-                                {/* Project status */}
-                                <td className="px-4 py-4 whitespace-nowrap">
-                                    <span className={`select-none badge ${project.status === 'OPEN'
-                                        ? 'badge--success'
-                                        : project.status === 'CLOSED'
-                                            ? 'badge--error'
-                                            : 'badge--warning'
-                                        }`}>
-                                        {project.status === 'OPEN' ? 'باز' : project.status === 'CLOSED' ? 'بسته' : 'در حال بررسی'}
-                                    </span>
-                                </td>
-                                {/* Action buttons */}
-                                <td className="px-4 py-4 whitespace-nowrap text-sm font-medium">
-                                    <div className="flex gap-2">
-                                        {/* Render action buttons dynamically */}
-                                        {actions.map((action, actionIndex) => {
-                                            const IconComponent = action.icon
-                                            return (
-                                                <button
-                                                    key={actionIndex}
-                                                    className={`p-2 text-${action.color}-600 dark:text-${action.color}-400 hover:bg-${action.color}-50 dark:hover:bg-${action.color}-900/20 rounded transition-colors`}
-                                                    title={action.title}
-                                                >
-                                                    <IconComponent className="w-4 h-4" />
-                                                </button>
-                                            )
-                                        })}
-                                    </div>
-                                </td>
-                            </tr>
+            <Table>
+                <Table.Header>
+                    <Table.Row>
+                        {/* Render table headers dynamically */}
+                        {headers.map((header) => (
+                            <Table.HeaderCell key={header}>
+                                {header}
+                            </Table.HeaderCell>
                         ))}
-                    </tbody>
-                </table>
-            </div>
+                    </Table.Row>
+                </Table.Header>
+                <Table.Body>
+                    {/* Render project rows */}
+                    {projects.map((project, index) => (
+                        <Table.Row
+                            key={project._id}
+                            className={`cursor-pointer transition-colors duration-200 ${index % 2 === 0 ? "bg-secondary-50 dark:bg-secondary-800 hover:bg-primary-50 dark:hover:bg-primary-900/20" : "bg-white dark:bg-secondary-700 hover:bg-primary-50 dark:hover:bg-primary-900/20"}`}
+                        >
+                            {/* Row index */}
+                            <Table.Cell>
+                                <div className="text-sm font-medium text-secondary-600 dark:text-secondary-400">{index + 1}</div>
+                            </Table.Cell>
+                            {/* Project title */}
+                            <Table.Cell>
+                                <div className="text-sm font-medium text-secondary-900 dark:text-secondary-100">{truncateText(project.title, 30)}</div>
+                            </Table.Cell>
+                            {/* Project category */}
+                            <Table.Cell>
+                                <div className="text-sm text-secondary-600 dark:text-secondary-300">
+                                    {project.category?.title || 'نامشخص'}
+                                </div>
+                            </Table.Cell>
+                            {/* Project budget */}
+                            <Table.Cell>
+                                <div className="text-sm text-secondary-900 dark:text-secondary-100">
+                                    {toPersianNumbersWithComma(project.budget)} ریال
+                                </div>
+                            </Table.Cell>
+                            {/* Project deadline */}
+                            <Table.Cell>
+                                <div className="text-sm text-secondary-900 dark:text-secondary-100">
+                                    {toLocalDateShort(project.deadline)}
+                                </div>
+                            </Table.Cell>
+                            {/* Project tags */}
+                            <Table.Cell>
+                                <div className="flex flex-wrap gap-1 select-none">
+                                    {project.tags && project.tags.length > 0 ? (
+                                        project.tags.map((tag, tagIndex) => (
+                                            <span key={tagIndex} className="badge badge--secondary">
+                                                {tag}
+                                            </span>
+                                        ))
+                                    ) : (
+                                        <span className="text-xs text-secondary-400 dark:text-secondary-500">بدون تگ</span>
+                                    )}
+                                </div>
+                            </Table.Cell>
+                            {/* Assigned freelancer */}
+                            <Table.Cell>
+                                <div className="text-sm text-secondary-600 dark:text-secondary-300">
+                                    {project.freelancer ? project.freelancer.name : 'انتخاب نشده'}
+                                </div>
+                            </Table.Cell>
+                            {/* Project status */}
+                            <Table.Cell>
+                                <span className={`select-none badge ${project.status === 'OPEN'
+                                    ? 'badge--success'
+                                    : project.status === 'CLOSED'
+                                        ? 'badge--error'
+                                        : 'badge--warning'
+                                    }`}>
+                                    {project.status === 'OPEN' ? 'باز' : project.status === 'CLOSED' ? 'بسته' : 'در حال بررسی'}
+                                </span>
+                            </Table.Cell>
+                            {/* Action buttons */}
+                            <Table.Cell className="text-sm font-medium">
+                                <div className="flex gap-2">
+                                    {/* Render action buttons dynamically */}
+                                    {actions.map((action, actionIndex) => {
+                                        const IconComponent = action.icon
+                                        return (
+                                            <button
+                                                key={actionIndex}
+                                                className={`p-2 text-${action.color}-600 dark:text-${action.color}-400 hover:bg-${action.color}-50 dark:hover:bg-${action.color}-900/20 rounded transition-colors`}
+                                                title={action.title}
+                                            >
+                                                <IconComponent className="w-4 h-4" />
+                                            </button>
+                                        )
+                                    })}
+                                </div>
+                            </Table.Cell>
+                        </Table.Row>
+                    ))}
+                </Table.Body>
+            </Table>
         </div>
     )
 }
