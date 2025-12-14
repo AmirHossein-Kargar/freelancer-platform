@@ -20,7 +20,7 @@ import AppLayout from "./ui/AppLayout";
 import ApiDocs from "./features/api/ApiDocs";
 import DashBoard from "./features/dashboard/owner/DashBoard";
 import Dashboard from "./features/dashboard/freelancer/Dashboard";
-import Projects from "./features/dashboard/owner/Projects";
+import Projects from "./pages/Projects";
 import Project from "./pages/Project";
 
 const queryClient = new QueryClient()
