@@ -2,30 +2,30 @@
 function Table({ children }) {
     return (
         <div className="overflow-x-auto">
-            <table className="min-w-full bg-white dark:bg-secondary-800 border-2 border-secondary-300 dark:border-secondary-600 rounded-lg shadow-sm">{children}</table>
+            <table className="min-w-full bg-secondary-0 dark:bg-secondary-800">{children}</table>
         </div>
     )
 }
 
 // Table header section with background styling
 function TableHeader({ children }) {
-    return <thead className="bg-secondary-50 dark:bg-secondary-700 border-b-2 border-secondary-300 dark:border-secondary-600">{children}</thead>
+    return <thead className="bg-secondary-50 dark:bg-secondary-900 select-none">{children}</thead>
 }
 
 // Table body with row dividers
 function TableBody({ children }) {
-    return <tbody className="bg-white dark:bg-secondary-800 divide-y divide-secondary-200 dark:divide-secondary-700">{children}</tbody>
+    return <tbody className="bg-secondary-0 dark:bg-secondary-800 divide-y divide-secondary-100 dark:divide-secondary-700">{children}</tbody>
 }
 
 // Individual table row with optional custom styling
 function TableRow({ children, className = "" }) {
-    return <tr className={`border-b border-secondary-200 dark:border-secondary-700 ${className}`}>{children}</tr>
+    return <tr className={className}>{children}</tr>
 }
 
 // Table header cell with RTL text alignment and styling
 function TableHeaderCell({ children, className = "" }) {
     return (
-        <th className={`px-4 py-3 text-right text-xs font-medium text-secondary-500 dark:text-secondary-400 uppercase tracking-wider border-b-2 border-r border-secondary-300 dark:border-secondary-600 ${className}`}>
+        <th className={`px-6 py-4 text-right text-xs font-semibold text-secondary-600 dark:text-secondary-300 uppercase tracking-wider ${className}`}>
             {children}
         </th>
     )
@@ -34,7 +34,7 @@ function TableHeaderCell({ children, className = "" }) {
 // Standard table cell with padding and no-wrap text
 function TableCell({ children, className = "" }) {
     return (
-        <td className={`px-4 py-4 whitespace-nowrap border-r border-secondary-200 dark:border-secondary-700 ${className}`}>
+        <td className={`px-6 py-4 whitespace-nowrap ${className}`}>
             {children}
         </td>
     )
