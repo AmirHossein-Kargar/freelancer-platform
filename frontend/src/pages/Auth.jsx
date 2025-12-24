@@ -1,6 +1,6 @@
 import { useState } from "react";
 import AuthHero from "../features/authentication/AuthHero";
-import AuthContainer from "../features/AuthContainer";
+import AuthContainer from "../features/authentication/AuthContainer";
 
 export default function Auth() {
     const [heroStep, setHeroStep] = useState("login");

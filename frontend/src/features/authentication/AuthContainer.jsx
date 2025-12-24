@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import SendOTPForm from "../features/authentication/SendOTPForm";
-import CheckOTPForm from "../features/authentication/CheckOTPForm";
+import SendOTPForm from "./SendOTPForm";
+import CheckOTPForm from "./CheckOTPForm";
 import { useMutation } from '@tanstack/react-query'
-import { getOtp } from '../services/authService'
+import { getOtp } from '../../services/authService'
 import toast from 'react-hot-toast'
-import { handleApiError } from '../utils/errorHandler'
-import { usePreventBackNavigation } from '../hooks/usePreventBackNavigation'
+import { handleApiError } from '../../utils/errorHandler'
+import { usePreventBackNavigation } from '../../hooks/usePreventBackNavigation'
 
 export default function AuthContainer({ onStepChange }) {
     const [step, setStep] = useState(1)
