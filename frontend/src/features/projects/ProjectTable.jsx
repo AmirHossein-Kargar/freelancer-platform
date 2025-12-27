@@ -56,7 +56,13 @@ export default function ProjectTable() {
         <>
             <div className="bg-secondary-0 dark:bg-secondary-800 rounded-xl shadow-sm border border-secondary-200 dark:border-secondary-700">
                 <div className="px-6 py-4 border-b border-secondary-200 dark:border-secondary-700">
-                    <h2 className="text-lg font-semibold text-secondary-900 dark:text-secondary-50 select-none">پروژه‌های من</h2>
+
+                    <div className="flex justify-between">
+                  
+                        <h2 className="text-lg font-semibold text-secondary-900 dark:text-secondary-50 select-none">پروژه‌های من</h2>
+                        <button className="btn btn--primary">اضافه کردن پروژه جدید</button>
+                  
+                    </div>
 
                     <Modal
                         open={isDeleteOpen}
