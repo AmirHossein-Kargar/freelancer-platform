@@ -1,4 +1,5 @@
 import useOwnerProjects from "./useOwnerProjects"
+import useDeleteProject from "./useDeleteProject"
 import Loading from "../../ui/Loading"
 import Table from "../../ui/Table"
 import { HiOutlinePencil, HiOutlineTrash } from "react-icons/hi2"
@@ -6,17 +7,24 @@ import truncateText from "../../utils/truncateText"
 import toLocalDateShort from "../../utils/toLocalDateShort"
 import { toPersianNumbersWithComma } from "../../utils/toPersianNumbers"
 import Modal from "../../ui/Modal"
-import { useState } from "react"
+import ConfirmDelete from "../../ui/ConfirmDelete"
+import useDeleteModal from "../../hooks/useDeleteModal"
 
-/**
- * ProjectTable Component
- * Displays a table of user's projects with actions (view, edit, delete)
- * Supports dark mode and responsive design
- */
+
 export default function ProjectTable() {
     const { projects, isLoading, error } = useOwnerProjects()
+    const { deleteProject, isDeleting } = useDeleteProject()
+    const { isDeleteOpen, selectedProject, handleOpenDeleteModal, handleCloseDeleteModal } = useDeleteModal()
 
-    const [isEditOpen, setIsEditOpen] = useState(false)
+    const handleDeleteProject = () => {
+        if (selectedProject?._id) {
+            deleteProject(selectedProject._id, {
+                onSuccess: () => {
+                    handleCloseDeleteModal()
+                }
+            })
+        }
+    }
 
     // Show loading state
     if (isLoading) return <Loading />
@@ -49,6 +57,20 @@ export default function ProjectTable() {
             <div className="bg-secondary-0 dark:bg-secondary-800 rounded-xl shadow-sm border border-secondary-200 dark:border-secondary-700">
                 <div className="px-6 py-4 border-b border-secondary-200 dark:border-secondary-700">
                     <h2 className="text-lg font-semibold text-secondary-900 dark:text-secondary-50 select-none">پروژه‌های من</h2>
+
+                    <Modal
+                        open={isDeleteOpen}
+                        onClose={handleCloseDeleteModal}
+                        title={selectedProject ? `حذف ${selectedProject.title}` : 'حذف پروژه'}
+                    >
+                        <ConfirmDelete
+                            resourceName={selectedProject?.title || 'پروژه'}
+                            disabled={isDeleting}
+                            onClose={handleCloseDeleteModal}
+                            onConfirm={handleDeleteProject}
+                        />
+                    </Modal>
+
                 </div>
                 <Table>
                     <Table.Header>
@@ -130,7 +152,7 @@ export default function ProjectTable() {
                                     <div className="flex gap-2">
                                         {/* Edit button */}
                                         <button
-                                            onClick={() => setIsEditOpen(true)}
+                                            onClick={() => console.log('Edit project:', project._id)}
                                             className="cursor-pointer p-2 rounded-lg transition-all duration-200 text-green-600 dark:text-green-400 hover:bg-green-50 hover:text-green-700 dark:hover:bg-green-900/20 dark:hover:text-green-300"
                                             title="ویرایش پروژه"
                                         >
@@ -138,11 +160,13 @@ export default function ProjectTable() {
                                         </button>
                                         {/* Delete button */}
                                         <button
+                                            onClick={() => handleOpenDeleteModal(project)}
                                             className="cursor-pointer p-2 rounded-lg transition-all duration-200 text-red-600 dark:text-red-400 hover:bg-red-50 hover:text-red-700 dark:hover:bg-red-900/20 dark:hover:text-red-300"
                                             title="حذف پروژه"
                                         >
                                             <HiOutlineTrash className="w-5 h-5" />
                                         </button>
+
                                     </div>
                                 </Table.Cell>
                             </Table.Row>
@@ -150,15 +174,6 @@ export default function ProjectTable() {
                     </Table.Body>
                 </Table>
             </div>
-
-            {/* Modal moved outside the table */}
-            <Modal
-                open={isEditOpen}
-                onClose={() => setIsEditOpen(false)}
-                title="modal title"
-            >
-                This is Modal...
-            </Modal>
         </>
     )
 }
