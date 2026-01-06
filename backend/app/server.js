@@ -51,11 +51,11 @@ class Application {
     // Trust proxy for accurate IP addresses
     this.#app.set("trust proxy", 1);
 
-    // CORS configuration
+    // CORS configuration - Allow all origins for development
     this.#app.use(
       cors({
         credentials: true,
-        origin: process.env.ALLOW_CORS_ORIGIN,
+        origin: true, // Allow all origins for development
         methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
         allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
       })

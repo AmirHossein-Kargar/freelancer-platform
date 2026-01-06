@@ -134,16 +134,11 @@ body {
 
   /* Buttons */
   .btn {
-    @apply cursor-pointer rounded-xl px-3 py-1
-    font-bold
-    transition-all duration-200;
+    @apply cursor-pointer rounded-xl px-4 py-3 font-bold transition-all duration-200 active:scale-95;
   }
 
   .btn--primary {
-    @apply px-4 py-3
-    bg-primary-900 text-white
-    shadow-lg shadow-primary-300 dark:shadow-primary-900/50
-    hover:bg-primary-800 dark:hover:bg-primary-700;
+    @apply bg-primary-900 text-white shadow-lg shadow-primary-300 dark:shadow-primary-900/50 hover:bg-primary-800 dark:hover:bg-primary-700 hover:-translate-y-0.5;
   }
 
   .btn--secondary {
@@ -163,17 +158,15 @@ body {
     @apply px-6 py-3 text-lg;
   }
 
-  /* OTP Input */
   .otp-input {
-    @apply h-12 w-10 rounded-xl
-    border border-secondary-200 dark:border-secondary-700
-    bg-secondary-50 dark:bg-secondary-900
-    text-center font-bold text-secondary-900 dark:text-secondary-50
-    outline-none
-    transition-all duration-200
-    focus:border-primary-500
-    focus:bg-secondary-0 dark:focus:bg-secondary-900
-    focus:shadow-lg focus:shadow-primary-200 dark:focus:shadow-primary-900;
+    @apply rounded-xl
+           border border-secondary-200 dark:border-secondary-700
+           bg-secondary-50 dark:bg-secondary-900
+           text-center font-bold text-secondary-900 dark:text-secondary-50
+           outline-none transition-all duration-200
+           focus:border-primary-500
+           focus:bg-secondary-0 dark:focus:bg-secondary-900
+           focus:shadow-lg focus:shadow-primary-200 dark:focus:shadow-primary-900;
   }
 
   /* Badges */

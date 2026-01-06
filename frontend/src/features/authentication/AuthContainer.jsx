@@ -2,19 +2,18 @@ import { useState } from 'react'
 import SendOTPForm from "./SendOTPForm";
 import CheckOTPForm from "./CheckOTPForm";
 import { useMutation } from '@tanstack/react-query'
-import { getOtp } from '../../services/authService'
 import toast from 'react-hot-toast'
 import { handleApiError } from '../../utils/errorHandler'
 import { usePreventBackNavigation } from '../../hooks/usePreventBackNavigation'
+import { getOtp } from '../../services/authService';
 
 export default function AuthContainer({ onStepChange }) {
-    const [step, setStep] = useState(1)
-    const [phoneNumber, setPhoneNumber] = useState("")
-    const [isLoading, setIsLoading] = useState(false)
+    const [step, setStep] = useState(1);
+    const [phoneNumber, setPhoneNumber] = useState("");
 
     usePreventBackNavigation(step === 2);
 
-    const { mutateAsync } = useMutation({
+    const { mutateAsync, isPending } = useMutation({
         mutationFn: getOtp
     });
 
@@ -25,22 +24,20 @@ export default function AuthContainer({ onStepChange }) {
 
     const sendOtpHandler = async (phone) => {
         try {
-            setIsLoading(true);
             const data = await mutateAsync({ phoneNumber: phone });
             toast.success(data.message);
             setPhoneNumber(phone);
             handleStepChange(2);
         } catch (error) {
             handleApiError(error);
-        } finally {
-            setIsLoading(false);
         }
     };
+
 
     const renderStep = () => {
         switch (step) {
             case 1:
-                return <SendOTPForm onSendOtp={sendOtpHandler} isPending={isLoading} />
+                return <SendOTPForm onSendOtp={sendOtpHandler} isPending={isPending} />
             case 2:
                 return <CheckOTPForm phoneNumber={phoneNumber} setStep={handleStepChange} onResendOtp={() => sendOtpHandler(phoneNumber)} />
             default: return null

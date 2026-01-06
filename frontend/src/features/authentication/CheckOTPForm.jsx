@@ -82,20 +82,12 @@ export default function CheckOTPForm({ phoneNumber, setStep, onResendOtp }) {
                     value={otp}
                     onChange={setOtp}
                     numInputs={6}
-                    renderInput={(props) => <input type="number" {...props} />}
+                    renderInput={(props) => <input {...props} type="text" inputMode="numeric" className="otp-input" />}
                     containerStyle="flex flex-row-reverse gap-x-2 justify-center"
                     inputStyle={{
                         width: "2.5rem",
                         height: "3rem",
-                        padding: "0.5rem 0.2rem",
-                        border: "1px solid #e5e7eb",
-                        borderRadius: "0.75rem",
-                        textAlign: "center",
-                        fontWeight: "bold",
-                        color: "#111827",
-                        backgroundColor: "#f9fafb",
-                        outline: "none",
-                        transition: "all 0.2s ease-in-out"
+                        padding: "0.5rem 0.2rem"
                     }}
                 />
 

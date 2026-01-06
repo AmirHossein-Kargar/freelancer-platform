@@ -8,7 +8,7 @@ const {
 } = require("../../../utils/functions");
 const createError = require("http-errors");
 const { UserModel } = require("../../models/user");
-const Kavenegar = require("kavenegar");
+const { Smsir } = require("smsir-js");
 const CODE_EXPIRES = 90 * 1000; //90 seconds in miliseconds
 const { StatusCodes: HttpStatus } = require("http-status-codes");
 const {
@@ -37,7 +37,6 @@ class userAuthController extends Controller {
     if (!result) throw createError.Unauthorized("ورود شما انجام نشد.");
 
     // send OTP
-
     if (process.env.IS_TESTING_MODE_OTP) {
       return res.status(HttpStatus.OK).send({
         statusCode: HttpStatus.OK,
@@ -48,7 +47,7 @@ class userAuthController extends Controller {
         },
       });
     } else {
-      this.sendOTP(phoneNumber, res);
+      await this.sendOTP(phoneNumber, res);
     }
   }
   async checkOtp(req, res) {
@@ -116,37 +115,46 @@ class userAuthController extends Controller {
     );
     return !!updatedResult.modifiedCount;
   }
-  sendOTP(phoneNumber, res) {
-    const kaveNegarApi = Kavenegar.KavenegarApi({
-      apikey: `${process.env.KAVENEGAR_API_KEY}`,
-    });
-    kaveNegarApi.VerifyLookup(
-      {
-        receptor: phoneNumber,
-        token: this.code,
-        template: "registerVerify",
-      },
-      (response, status) => {
-        // console.log(response);
-        // console.log("kavenegar message status", status);
-        if (response && status === 200)
-          return res.status(HttpStatus.OK).send({
-            statusCode: HttpStatus.OK,
-            data: {
-              message: `کد تائید برای شماره موبایل ${toPersianDigits(
-                phoneNumber
-              )} ارسال گردید`,
-              expiresIn: CODE_EXPIRES,
-              phoneNumber,
-            },
-          });
+  async sendOTP(phoneNumber, res) {
+    try {
+      const smsir = new Smsir(process.env.SMSIR_API_KEY);
 
-        return res.status(status).send({
-          statusCode: status,
-          message: "کد اعتبارسنجی ارسال نشد",
+      const parameters = [
+        {
+          name: "CODE",
+          value: this.code.toString(),
+        },
+      ];
+
+      const result = await smsir.SendByTemplate({
+        templateId: parseInt(process.env.SMSIR_TEMPLATE_ID),
+        mobile: phoneNumber,
+        parameters: parameters,
+      });
+
+      if (result.status === 1) {
+        return res.status(HttpStatus.OK).send({
+          statusCode: HttpStatus.OK,
+          data: {
+            message: `کد تائید برای شماره موبایل ${toPersianDigits(
+              phoneNumber
+            )} ارسال گردید`,
+            expiresIn: CODE_EXPIRES,
+            phoneNumber,
+          },
         });
+      } else {
+        throw new Error(
+          `SMS.ir API Error: ${result.message || "Unknown error"}`
+        );
       }
-    );
+    } catch (error) {
+      console.error("SMS.ir Error:", error);
+      return res.status(HttpStatus.FORBIDDEN).send({
+        statusCode: HttpStatus.FORBIDDEN,
+        message: "کد اعتبارسنجی ارسال نشد",
+      });
+    }
   }
   async completeProfile(req, res) {
     await completeProfileSchema.validateAsync(req.body);
