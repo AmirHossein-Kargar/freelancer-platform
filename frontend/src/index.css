@@ -118,18 +118,38 @@ body {
 }
 
 @layer components {
-  /* Text Field */
   .textField__input {
     @apply w-full rounded-xl px-4 py-3
-    border border-secondary-200 dark:border-secondary-700
-    bg-secondary-0 dark:bg-secondary-900
-    text-secondary-900 dark:text-secondary-50
-    outline-none
-    transition-all duration-200 ease-in-out
-    hover:border-primary-300 dark:hover:border-primary-500
-    focus:border-primary-500 
-    focus:bg-secondary-0 dark:focus:bg-secondary-900
-    focus:shadow-lg focus:shadow-primary-200 dark:focus:shadow-primary-900;
+           placeholder:text-secondary-400
+           dark:placeholder:text-secondary-500
+
+           border border-secondary-200 dark:border-secondary-700
+           bg-secondary-0 dark:bg-secondary-900
+           text-secondary-900 dark:text-secondary-50
+
+           outline-none
+           transition-all duration-200 ease-in-out
+
+           hover:border-primary-300 dark:hover:border-primary-500
+
+           focus:border-primary-500
+           focus:bg-secondary-0 dark:focus:bg-secondary-900
+
+           /* 👇 به‌جای shadow بزرگ */
+           focus-visible:ring-1
+           focus-visible:ring-primary-400
+           focus-visible:ring-offset-0
+
+           disabled:opacity-60 disabled:cursor-not-allowed
+           disabled:bg-secondary-100 dark:disabled:bg-secondary-800
+
+           read-only:bg-secondary-50 dark:read-only:bg-secondary-800
+           read-only:cursor-default;
+  }
+  .textField__input--error {
+    @apply border-error
+         focus:border-error
+         focus:shadow-red-300;
   }
 
   /* Buttons */

@@ -71,12 +71,18 @@ export default function CheckOTPForm({ phoneNumber, setStep, onResendOtp }) {
             <form action="" className="space-y-8" onSubmit={checkOtpHandler}>
                 <div className="space-y-4">
 
-                    <button type="button" onClick={() => setStep(1)} className="text-secondary-600 dark:text-secondary-400 hover:text-secondary-800 dark:hover:text-secondary-200 cursor-pointer flex justify-end transition-colors duration-200">
+                    <button type="button" onClick={() => setStep(1)} className="cursor-pointer flex justify-end
+    text-secondary-600 dark:text-secondary-400
+    hover:text-primary-600 dark:hover:text-primary-400
+    transition-colors duration-200">
                         <FaArrowRightFromBracket />
                     </button>
 
-                    <h1 className="text-2xl font-bold text-secondary-900 dark:text-white text-center">کد تایید را وارد کنید</h1>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">کد تایید ارسال شده به شماره موبایل را وارد کنید</p>
+                    <div className="text-center space-y-4">
+                        <h1 className="text-2xl font-bold text-secondary-900 dark:text-white text-center">کد تایید را وارد کنید</h1>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">کد تایید ارسال شده به شماره موبایل را وارد کنید</p>
+                    </div>
+
                 </div>
                 <OtpInput
                     value={otp}
@@ -111,9 +117,14 @@ export default function CheckOTPForm({ phoneNumber, setStep, onResendOtp }) {
                         </p>
                     </div>
                 ) : (
-                    <button type="button" onClick={handleResendOtp} className="text-secondary-600 dark:text-secondary-400 w-full text-sm hover:text-secondary-800 dark:hover:text-secondary-200 transition-colors duration-200 cursor-pointer">
-                        دریافت مجدد کد تایید
-                    </button>
+                    <div className="flex justify-center">
+                        <button type="button" onClick={handleResendOtp} className="text-sm cursor-pointer
+    text-secondary-600 dark:text-secondary-400
+    hover:text-primary-600 dark:hover:text-primary-400
+    transition-colors duration-200">
+                            دریافت مجدد کد تایید
+                        </button>
+                    </div>
                 )}
                 {isPending ? <Loading /> : <button className="btn btn--primary w-full">تایید</button>}
             </form>
