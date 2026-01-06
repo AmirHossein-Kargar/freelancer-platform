@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import OtpInput from "react-otp-input"
 import toast from "react-hot-toast"
 import { handleApiError } from "../../utils/errorHandler"
-import { checktOtp } from "../../services/authService"
+import { checkOtp } from "../../services/authService"
 import { useNavigate } from "react-router-dom"
 import { FaArrowRightFromBracket } from "react-icons/fa6";
 import Loading from "../../ui/Loading"
@@ -18,7 +18,7 @@ export default function CheckOTPForm({ phoneNumber, setStep, onResendOtp }) {
     const navigate = useNavigate()
 
     const { isPending, mutateAsync } = useMutation({
-        mutationFn: checktOtp
+        mutationFn: checkOtp
     })
 
 
