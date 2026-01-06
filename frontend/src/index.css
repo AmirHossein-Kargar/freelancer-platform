@@ -171,7 +171,7 @@ body {
 
   /* Badges */
   .badge {
-    @apply inline-flex px-3 py-1.5 text-xs font-semibold rounded-full;
+    @apply inline-flex px-3 py-1.5 text-xs font-semibold rounded-full leading-none align-middle gap-1 items-center;
   }
 
   .badge--primary {

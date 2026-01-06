@@ -1,6 +1,7 @@
 import { Toaster } from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AppRoutes from "./routes/AppRoutes";
+import Badge from "./ui/Badge";
 
 const queryClient = new QueryClient();
 

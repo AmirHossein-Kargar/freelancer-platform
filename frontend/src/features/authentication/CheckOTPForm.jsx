@@ -82,7 +82,20 @@ export default function CheckOTPForm({ phoneNumber, setStep, onResendOtp }) {
                     value={otp}
                     onChange={setOtp}
                     numInputs={6}
-                    renderInput={(props) => <input {...props} type="text" inputMode="numeric" className="otp-input" />}
+                    renderInput={(props) => (
+                        <input
+                            {...props}
+                            type="text"
+                            inputMode="numeric"
+                            pattern="[0-9]*"
+                            className="otp-input"
+                            onKeyPress={(e) => {
+                                if (!/[0-9]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== 'Tab' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') {
+                                    e.preventDefault();
+                                }
+                            }}
+                        />
+                    )}
                     containerStyle="flex flex-row-reverse gap-x-2 justify-center"
                     inputStyle={{
                         width: "2.5rem",
