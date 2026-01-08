@@ -9,7 +9,9 @@ const VARIANTS = {
 };
 
 const SIZES = {
-  sm: "px-2 py-1 text-[11px]",};
+  xs: "px-2 py-1 text-[9px]",
+  sm: "px-2 py-1 text-[11px]",
+};
 
 export default function Badge({
   children,

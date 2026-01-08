@@ -12,11 +12,6 @@ function App() {
         toastOptions={{
           className:
             "dark:!bg-secondary-800 dark:!text-secondary-100 dark:!border-secondary-700",
-          style: {
-            background: "rgb(var(--color-secondary-0) / 1)",
-            color: "rgb(var(--color-secondary-900) / 1)",
-            border: "1px solid rgb(var(--color-secondary-200) / 1)",
-          },
         }}
       />
       <AppRoutes />

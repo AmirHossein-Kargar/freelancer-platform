@@ -1,8 +1,14 @@
 const rateLimit = require("express-rate-limit");
 const { securityLogger } = require("./security.logger");
 
+// Check if rate limiting is enabled
+const isRateLimitingEnabled = process.env.ENABLE_RATE_LIMITING === "true";
+
+// Dummy middleware that does nothing (when rate limiting is disabled)
+const noOpMiddleware = (req, res, next) => next();
+
 // Rate limiter for getting OTP (sending SMS)
-const getOtpLimiter = rateLimit({
+const getOtpLimiterInstance = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 3, // limit each IP to 3 OTP requests per 15 minutes
   message: {
@@ -30,7 +36,7 @@ const getOtpLimiter = rateLimit({
 });
 
 // Rate limiter for checking OTP (verifying code)
-const checkOtpLimiter = rateLimit({
+const checkOtpLimiterInstance = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 5, // limit each IP to 5 verification attempts per 15 minutes
   message: {
@@ -59,7 +65,7 @@ const checkOtpLimiter = rateLimit({
 });
 
 // General API rate limiter
-const apiLimiter = rateLimit({
+const apiLimiterInstance = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // limit each IP to 100 requests per windowMs
   message: {
@@ -70,4 +76,10 @@ const apiLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-module.exports = { getOtpLimiter, checkOtpLimiter, apiLimiter };
+module.exports = {
+  getOtpLimiter: isRateLimitingEnabled ? getOtpLimiterInstance : noOpMiddleware,
+  checkOtpLimiter: isRateLimitingEnabled
+    ? checkOtpLimiterInstance
+    : noOpMiddleware,
+  apiLimiter: isRateLimitingEnabled ? apiLimiterInstance : noOpMiddleware,
+};
